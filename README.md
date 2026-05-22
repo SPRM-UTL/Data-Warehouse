@@ -22,8 +22,6 @@ El módulo está organizado de la siguiente manera:
 
 ## Esquema del Data Warehouse
 
-Para optimizar las consultas históricas complejas de la aplicación web, el sistema implementa un **Modelo Dimensional en Estrella (Star Schema)**. Este diseño desnormaliza las entidades operacionales para maximizar la velocidad de lectura sin saturar las transacciones activas de los usuarios.
-
 ![Esquema en Estrella del Data Warehouse](data_warehouse.png)
 
 ### Componentes del Modelo
@@ -68,3 +66,10 @@ Para reproducir la transformación y generar un nuevo dataset limpio, asegúrate
 ### Prerrequisitos
 ```bash
 pip install pandas numpy
+```
+
+
+## Esquema del Modelo de Datos
+
+![Modelo de datos](SPRM.png)
+
