@@ -1,10 +1,16 @@
-# Manordomo - Data Warehouse & Analytics 📊🧠
+# Manordomo - Data Warehouse & Analytics
 
 Este módulo del proyecto integrador **Manordomo** contiene el diseño, especificaciones técnicas y herramientas de preprocesamiento para la capa analítica y almacenamiento de inteligencia de negocio (BI). El objetivo es transformar los flujos de eventos de control domótico por gestos e IoT en un esquema óptimo para la auditoría, análisis de rendimiento de IA y reportería web.
 
 ---
 
-## 🚀 Estructura del Repositorio
+
+## Laboratorio Interactivo (Google Colab)
+[Abrir Notebook en Google Colab](https://colab.research.google.com/drive/1eY36YzHGZX0pxgheuFqsykGAZFwRlp35#scrollTo=5IhJdoS1Kd77)
+
+--
+
+## Estructura del Repositorio
 
 El módulo está organizado de la siguiente manera:
 * `data_warehouse.png`: Diagrama visual del modelo dimensional en estrella.
@@ -14,7 +20,7 @@ El módulo está organizado de la siguiente manera:
 
 ---
 
-## 📐 Esquema del Data Warehouse
+## Esquema del Data Warehouse
 
 Para optimizar las consultas históricas complejas de la aplicación web, el sistema implementa un **Modelo Dimensional en Estrella (Star Schema)**. Este diseño desnormaliza las entidades operacionales para maximizar la velocidad de lectura sin saturar las transacciones activas de los usuarios.
 
@@ -34,7 +40,7 @@ Para optimizar las consultas históricas complejas de la aplicación web, el sis
 
 ---
 
-## 🗂️ Tipos y Fuentes de Datos
+## Tipos y Fuentes de Datos
 
 El almacén analítico procesa información proveniente de un entorno híbrido multi-fuente:
 * **Base de Datos Relacional OLTP (MySQL)**: Datos de configuración fuertemente tipados (`INT`, `VARCHAR`, `DATETIME`, `BIT`).
@@ -43,7 +49,7 @@ El almacén analítico procesa información proveniente de un entorno híbrido m
 
 ---
 
-## 🧹 Técnicas de Limpieza y Preprocesamiento de Datos
+## Técnicas de Limpieza y Preprocesamiento de Datos
 
 Antes de ingresar al Data Warehouse, los flujos brutos pasan por una tubería (Pipeline) de procesamiento construida con **Python** y **Pandas** que ejecuta las siguientes reglas de negocio:
 
@@ -55,15 +61,7 @@ Antes de ingresar al Data Warehouse, los flujos brutos pasan por una tubería (P
 
 ---
 
-## ⚙️ Parámetros de Configuración del ETL
-
-* **Frecuencia de Refresco**: Carga de tipo **Incremental Periódica Nocturna** (ejecutada automáticamente a las **02:00 AM**) para mitigar el consumo de recursos de producción.
-* **Gestión de Cambios de Dimensión**: Implementación de **SCD Tipo 1** (Cambios Lentos de Dimensión) para sobrescribir atributos informativos mutables (como correos electrónicos o alias de focos/ventiladores) manteniendo la dimensión actualizada.
-* **Indexación y Optimización**: Índices agrupados (*Clustered*) en claves primarias subrogadas e índice compuesto no agrupado sobre las dimensiones temporales y de usuario `(sk_tiempo_id, sk_usuario_id)` para acelerar la carga de los tableros web interactivos.
-
----
-
-## 🛠️ Ejecución del Pipeline de Limpieza
+## Ejecución del Pipeline de Limpieza
 
 Para reproducir la transformación y generar un nuevo dataset limpio, asegúrate de tener instaladas las dependencias y ejecuta el script principal:
 
