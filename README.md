@@ -8,7 +8,7 @@ Este módulo del proyecto integrador **Manordomo** contiene el diseño, especifi
 ## Laboratorio Interactivo (Google Colab)
 [Abrir Notebook en Google Colab](https://colab.research.google.com/drive/1eY36YzHGZX0pxgheuFqsykGAZFwRlp35#scrollTo=5IhJdoS1Kd77)
 
---
+---
 
 ## Estructura del Repositorio
 
@@ -68,6 +68,7 @@ Para reproducir la transformación y generar un nuevo dataset limpio, asegúrate
 pip install pandas numpy
 ```
 
+---
 
 ## Esquema del Modelo de Datos
 
