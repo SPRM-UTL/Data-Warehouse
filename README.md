@@ -1,22 +1,12 @@
-# Manordomo - Data Warehouse & Analytics
+# Manordomo - Data Warehouse
 
-Este módulo del proyecto integrador **Manordomo** contiene el diseño, especificaciones técnicas y herramientas de preprocesamiento para la capa analítica y almacenamiento de inteligencia de negocio (BI). El objetivo es transformar los flujos de eventos de control domótico por gestos e IoT en un esquema óptimo para la auditoría, análisis de rendimiento de IA y reportería web.
+Este módulo del proyecto integrador **Manordomo** contiene el diseño, especificaciones técnicas y herramientas de preprocesamiento para la capa analítica y almacenamiento de inteligencia de negocio (BI). 
 
 ---
 
 
 ## Laboratorio Interactivo (Google Colab)
 [Abrir Notebook en Google Colab](https://colab.research.google.com/drive/1eY36YzHGZX0pxgheuFqsykGAZFwRlp35#scrollTo=5IhJdoS1Kd77)
-
----
-
-## Estructura del Repositorio
-
-El módulo está organizado de la siguiente manera:
-* `data_warehouse.png`: Diagrama visual del modelo dimensional en estrella.
-* `RESPALDO.sql`: Script SQL con la estructura de la base de datos transaccional mejorada (OLTP).
-* `ejemplo-limpieza.py`: Script automatizado en Python para el proceso ETL y preprocesamiento de calidad.
-* `dataset_manordomo_clean.csv`: Conjunto de datos de muestra depurado, listo para cargarse en el almacén analítico.
 
 ---
 
