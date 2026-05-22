@@ -1,0 +1,5 @@
+Id,UsuarioId,ArduinoId,AccionConfiguradaId,GestoDetectado,DisparadorDetectado,AccionEjecutada,AparatoAfectado,ConfianzaIA,TiempoRespuestaMS,FechaEjecucion,EjecucionExitosa,sk_tiempo_id
+1,101,10,501,Mano Abierta,Por Pulso,encender_foco,Foco Sala,94.5,120,2026-05-21 14:22:10,1,20260521
+2,102,20,502,Puno Cerrado,Continuo,apagar_tv,TV Recamara,88.2,340,2026-05-21 14:25:15,1,20260521
+3,101,10,501,No Identificado,Por Pulso,encender_foco,Foco Sala,45.0,0,2026-05-21 14:26:00,0,20260521
+4,103,30,503,Victoria,Por Pulso,abrir_chapa,Chapa Principal,100.0,210,2026-05-21 15:01:02,1,20260521
