@@ -2,6 +2,7 @@
 -- DATA WAREHOUSE - MANORDOMO (ESQUEMA EN ESTRELLA)
 -- ======================================================================================
 -- Este script define el modelo dimensional OLAP optimizado para análisis de IA y BI.
+-- Actualizado para coincidir con los nuevos modelos del backend (C# Entity Framework).
 -- ======================================================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -18,12 +19,12 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- DIMENSIÓN 1: USUARIOS (dim_usuarios)
 -- =====================================================
 CREATE TABLE dim_usuarios (
-    sk_usuario_id INT AUTO_INCREMENT PRIMARY KEY, -- Clave subrogada (Surrogate Key)
-    bk_usuario_id INT NOT NULL,                   -- Clave de negocio (Business Key original)
-    nombre_usuario VARCHAR(100) NOT NULL,
-    email_usuario VARCHAR(150) NOT NULL,
+    sk_usuario_id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(100) NULL,
+    email_usuario VARCHAR(150) NULL,
+    contrasenia VARCHAR(500) NULL,
     nombre_arduino VARCHAR(100) NULL,
-    mac_address_arduino VARCHAR(17) NULL
+    mac_address_usuario VARCHAR(17) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =====================================================
@@ -32,10 +33,15 @@ CREATE TABLE dim_usuarios (
 CREATE TABLE dim_gestos (
     sk_gesto_id INT AUTO_INCREMENT PRIMARY KEY,
     bk_gesto_id INT NOT NULL,
-    nombre_gesto VARCHAR(100) NOT NULL,
+    nombre_gesto VARCHAR(100) NULL,
+    icono VARCHAR(50) NULL,
     identificador_ia INT NOT NULL,
-    nivel_confianza_minimo DECIMAL(5,2) DEFAULT 0.70,
-    tipo_disparador_nombre VARCHAR(100) NULL
+    nivel_confianza_minimo DECIMAL(5,2) NOT NULL,
+    tipo_disparador_nombre VARCHAR(100) NULL,
+    
+    -- Relaciones adicionales
+    sk_aparato_id INT NULL,
+    sk_usuario_id INT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =====================================================
@@ -43,24 +49,28 @@ CREATE TABLE dim_gestos (
 -- =====================================================
 CREATE TABLE dim_aparatos (
     sk_aparato_id INT AUTO_INCREMENT PRIMARY KEY,
-    bk_aparato_id INT NOT NULL,
-    nombre_aparato VARCHAR(100) NOT NULL,
-    tipo_aparato VARCHAR(50) NULL,
-    accion_nombre VARCHAR(100) NULL,
-    comando_bluetooth VARCHAR(50) NULL
+    nombre_aparato VARCHAR(100) NULL,
+    icono VARCHAR(50) NULL,
+    fecha_sincronizacion DATETIME NULL,
+    
+    -- Relaciones adicionales / FKs
+    sk_aparato_tipo_id INT NULL,
+    sk_aparato_accion_id INT NULL,
+    sk_usuario_id INT NULL,
+    sk_habitacion_id INT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =====================================================
 -- DIMENSIÓN 4: TIEMPO (dim_tiempo)
 -- =====================================================
 CREATE TABLE dim_tiempo (
-    sk_tiempo_id INT PRIMARY KEY, -- Formato AAAAMMDD (Ej. 20260701)
+    sk_tiempo_id INT PRIMARY KEY,
     fecha_completa DATE NOT NULL,
     anio INT NOT NULL,
     mes_numero INT NOT NULL,
-    mes_nombre VARCHAR(15) NOT NULL,
-    dia_semana_nombre VARCHAR(15) NOT NULL,
-    hora_periodo INT NOT NULL     -- Hora del día (0-23)
+    mes_nombre VARCHAR(255) NULL,
+    dia_semana_nombre VARCHAR(255) NULL,
+    hora_periodo INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =====================================================
@@ -77,7 +87,8 @@ CREATE TABLE fact_historico_actividad (
     
     -- Métricas / Hechos (Facts)
     confianza_ia DECIMAL(5,2) NOT NULL,
-    tiempo_respuesta_ms INT NOT NULL,
+    tiempo_respuesta INT NOT NULL,
+    ejecucion_exitosa BIT NOT NULL,
     
     CONSTRAINT FK_Fact_Usuario FOREIGN KEY (sk_usuario_id) REFERENCES dim_usuarios(sk_usuario_id) ON DELETE CASCADE,
     CONSTRAINT FK_Fact_Gesto FOREIGN KEY (sk_gesto_id) REFERENCES dim_gestos(sk_gesto_id) ON DELETE CASCADE,
